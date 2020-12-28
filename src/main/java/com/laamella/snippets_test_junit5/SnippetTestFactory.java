@@ -26,13 +26,13 @@ public class SnippetTestFactory<T> {
     private final String separatorAfterTestCase;
     private final String separatorBetweenExpectations;
     private final String expectationsEndString;
-    private final Path basePath;
+    private final BasePath basePath;
     private final Predicate<Path> testcaseFilenameFilter;
     private final Function<String, T> testCaseProcessor;
     private final ActualGenerator<T>[] actualGenerators;
 
     /**
-     * @param basePath                     sets the base path. Base path + testCasesDirectory = where the test case snippets are located. Subdirectories are included. {@link BasePathBuilder} will help in setting up this path.
+     * @param basePath                     sets the base path. Base path + testCasesDirectory = where the test case snippets are located. Subdirectories are included. {@link BasePath} will help in setting up this path.
      * @param testcaseFilenameFilter       when only snippets are in the indicated directory, "path -> true"  is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
      * @param testCaseProcessor            takes the test case text that was found in a snippet file, and gives you the change to process it before passing the result to all the actualGenerators.
      * @param descriptionStartString       the string that indicates the start of the optional description. This has to be the very first piece of text to appear in the snippet, or it is assumed that there is no description.
@@ -44,7 +44,7 @@ public class SnippetTestFactory<T> {
      */
     @SafeVarargs
     public SnippetTestFactory(
-            Path basePath,
+            BasePath basePath,
             Predicate<Path> testcaseFilenameFilter,
             Function<String, T> testCaseProcessor,
             String descriptionStartString, String descriptionEndString, String separatorAfterTestCase,
@@ -66,12 +66,15 @@ public class SnippetTestFactory<T> {
         return stream(testCasesDirectory, false);
     }
 
+    /**
+     * Use this once instead of "stream" to rewrite all expectations to the current actuals.
+     */
     public Stream<DynamicTest> regenerate(String testCasesDirectory) throws IOException {
         return stream(testCasesDirectory, true);
     }
 
     public Stream<DynamicTest> stream(String testCasesDirectory, boolean regenerate) throws IOException {
-        Path testCasesPath = basePath.resolve(testCasesDirectory).toAbsolutePath();
+        Path testCasesPath = basePath.toPath().resolve(testCasesDirectory).toAbsolutePath();
 
         createDirectories(testCasesPath);
 

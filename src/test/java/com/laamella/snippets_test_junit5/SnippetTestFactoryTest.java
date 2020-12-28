@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 class SnippetTestFactoryTest {
-    private final Path basePath = BasePathBuilder.fromMavenModuleRoot(SnippetTestFactoryTest.class).inSrcTestResources().build();
+    private final BasePath basePath = BasePath.fromMavenModuleRoot(SnippetTestFactoryTest.class).inSrcTestResources();
 
     @TestFactory
     Stream<DynamicTest> test1() throws IOException {
