@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.walk;
 import static java.util.Objects.requireNonNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 /**
@@ -76,7 +77,10 @@ public class SnippetTestFactory<T> {
     public Stream<DynamicTest> stream(String testCasesDirectory, boolean regenerate) throws IOException {
         Path testCasesPath = basePath.toPath().resolve(testCasesDirectory).toAbsolutePath();
 
-        createDirectories(testCasesPath);
+        if (!Files.exists(testCasesPath)) {
+            createDirectories(testCasesPath);
+            fail("Created new testcases directory in " + testCasesPath);
+        }
 
         return walk(testCasesPath)
                 .filter(Files::isRegularFile)
