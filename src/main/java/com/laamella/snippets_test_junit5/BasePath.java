@@ -26,6 +26,10 @@ public class BasePath {
         return new BasePath(fromClassLoaderRoot(c).path.resolve(Paths.get("..", "..")).normalize());
     }
 
+    public static BasePath fromPath(Path path) {
+        return new BasePath(path);
+    }
+
     public BasePath inSrcTestResources() {
         return new BasePath(path.resolve(Paths.get("src", "test", "resources")));
     }
