@@ -2,6 +2,9 @@ package com.laamella.snippets_test_junit5;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * The various strings used to organize a snippet.
+ */
 public class SnippetFileFormat {
     final String descriptionStartString;
     final String descriptionEndString;

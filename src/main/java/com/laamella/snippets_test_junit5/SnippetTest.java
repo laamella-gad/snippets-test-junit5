@@ -4,7 +4,6 @@ import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.function.Function;
 
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
@@ -20,7 +19,7 @@ class SnippetTest<T> implements Executable {
     private final TestCaseProcessor<T> testCaseProcessor;
     private final ActualGenerator<T>[] actualGenerators;
     private final boolean regenerate;
-    private SnippetFileFormat fileFormat;
+    private final SnippetFileFormat fileFormat;
 
     @SafeVarargs
     protected SnippetTest(
@@ -54,7 +53,7 @@ class SnippetTest<T> implements Executable {
             fail("No expectation found. Generated one.");
         } else {
             // Compare with expected:
-            assertEquals(testFile.expected.trim(), actual.trim());
+            assertEquals(testFile.expected, actual);
         }
     }
 }
