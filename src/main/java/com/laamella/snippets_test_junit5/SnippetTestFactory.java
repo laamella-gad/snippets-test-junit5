@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DynamicTest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.createDirectories;
@@ -22,7 +21,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
  */
 public class SnippetTestFactory<T> {
     private final BasePath basePath;
-    private final Predicate<Path> testcaseFilenameFilter;
+    private final TestCaseFilenameFilter testCaseFilenameFilter;
     private final SnippetFileFormat fileFormat;
     private final TestCaseProcessor<T> testCaseProcessor;
     private final ActualGenerator<T>[] actualGenerators;
@@ -30,7 +29,7 @@ public class SnippetTestFactory<T> {
     /**
      * @param fileFormat             the special strings used in the snippets.
      * @param basePath               sets the base path. Base path + testCasesDirectory = where the test case snippets are located. Subdirectories are included. {@link BasePath} will help in setting up this path.
-     * @param testcaseFilenameFilter when only snippets are in the indicated directory, "path -> true"  is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
+     * @param testCaseFilenameFilter when only snippets are in the indicated directory, "path -> true"  is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
      * @param testCaseProcessor      takes the test case text that was found in a snippet file, and gives you the change to process it before passing the result to all the actualGenerators.
      * @param actualGenerators       the printers that create an "actual" to test against.
      */
@@ -38,11 +37,11 @@ public class SnippetTestFactory<T> {
     public SnippetTestFactory(
             SnippetFileFormat fileFormat,
             BasePath basePath,
-            Predicate<Path> testcaseFilenameFilter,
+            TestCaseFilenameFilter testCaseFilenameFilter,
             TestCaseProcessor<T> testCaseProcessor,
             ActualGenerator<T>... actualGenerators) {
         this.basePath = requireNonNull(basePath);
-        this.testcaseFilenameFilter = requireNonNull(testcaseFilenameFilter);
+        this.testCaseFilenameFilter = requireNonNull(testCaseFilenameFilter);
         this.fileFormat = requireNonNull(fileFormat);
         this.testCaseProcessor = requireNonNull(testCaseProcessor);
         this.actualGenerators = requireNonNull(actualGenerators);
@@ -55,7 +54,7 @@ public class SnippetTestFactory<T> {
     /**
      * Use this once instead of "stream" to rewrite all expectations to the current actuals.
      */
-    public Stream<DynamicTest> regenerate() throws IOException {
+    public Stream<DynamicTest> regenerateAllExpectations() throws IOException {
         return stream(true);
     }
 
@@ -69,7 +68,7 @@ public class SnippetTestFactory<T> {
 
         return walk(testCasesPath)
                 .filter(Files::isRegularFile)
-                .filter(testcaseFilenameFilter)
+                .filter(testCaseFilenameFilter::isTestCase)
                 .map(testCasesPath::relativize)
                 .map(filename -> dynamicTest(
                         filename.toString(),
