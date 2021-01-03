@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.stream.Stream;
 
 class SnippetTestFactoryTest {
@@ -13,15 +12,11 @@ class SnippetTestFactoryTest {
     @TestFactory
     Stream<DynamicTest> test1() throws IOException {
         return new SnippetTestFactory<>(
-                basePath,
+                new SnippetFileFormat(">>>", "<<<\n", "\n^^^\n", "\n---\n", "\nvvv\n"),
+                basePath.inSubDirectory("test1"),
                 path -> true,
                 tc -> tc,
-                ">>>",
-                "<<<\n",
-                "\n^^^\n",
-                "\n---\n",
-                "\nvvv\n",
                 (testCaseText, testCase) -> testCase.toUpperCase()
-        ).stream("test1");
+        ).stream();
     }
 }

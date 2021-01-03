@@ -15,19 +15,19 @@ import static org.junit.jupiter.api.Assertions.fail;
 class SnippetTestFile {
     private final Path file;
     private final String separatorAfterTestCase;
-    private final String fileEndingString;
+    private final String expectationsEndString;
     private final String descriptionStartString;
     private final String descriptionEndString;
     String description = null;
     String testCase = null;
     String expected = null;
 
-    public SnippetTestFile(Path file, String descriptionStartString, String descriptionEndString, String separatorAfterTestCase, String fileEndingString) {
+    public SnippetTestFile(Path file,SnippetFileFormat fileFormat) {
         this.file = file;
-        this.descriptionStartString = descriptionStartString;
-        this.descriptionEndString = descriptionEndString;
-        this.separatorAfterTestCase = separatorAfterTestCase;
-        this.fileEndingString = fileEndingString;
+        this.descriptionStartString =fileFormat.descriptionStartString;
+        this.descriptionEndString = fileFormat.descriptionEndString;
+        this.separatorAfterTestCase = fileFormat.separatorAfterTestCase;
+        this.expectationsEndString = fileFormat.expectationsEndString;
     }
 
     void read() throws IOException {
@@ -53,11 +53,11 @@ class SnippetTestFile {
         }
 
         testCase = fileAfterDescription.substring(0, expectationsPosition);
-        expected = fileAfterDescription.substring(expectationsPosition + separatorAfterTestCase.length(), fileAfterDescription.length() - fileEndingString.length());
+        expected = fileAfterDescription.substring(expectationsPosition + separatorAfterTestCase.length(), fileAfterDescription.length() - expectationsEndString.length());
     }
 
     void write() throws IOException {
-        String content = testCase + separatorAfterTestCase + expected + fileEndingString;
+        String content = testCase + separatorAfterTestCase + expected + expectationsEndString;
         if (description != null) {
             content = description + descriptionEndString + content;
         }

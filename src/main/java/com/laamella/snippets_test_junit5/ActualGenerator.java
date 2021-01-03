@@ -6,6 +6,7 @@ package com.laamella.snippets_test_junit5;
  *
  * @param <T> the preprocessed test case type
  */
+@FunctionalInterface
 public interface ActualGenerator<T> {
     String generate(String testCaseText, T testCase);
 }

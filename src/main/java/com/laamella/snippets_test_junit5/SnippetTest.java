@@ -17,46 +17,35 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 class SnippetTest<T> implements Executable {
     private final Path testCaseFile;
-    private final String separatorBetweenExpectations;
-    private final String expectationsEndString;
-    private final Function<String, T> testCaseProcessor;
+    private final TestCaseProcessor<T> testCaseProcessor;
     private final ActualGenerator<T>[] actualGenerators;
-    private final String separatorAfterTestCase;
-    private final String descriptionStartString;
-    private final String descriptionEndString;
     private final boolean regenerate;
+    private SnippetFileFormat fileFormat;
 
     @SafeVarargs
     protected SnippetTest(
             Path testCaseFile,
-            boolean regenerate, String descriptionStartString,
-            String descriptionEndString,
-            String separatorAfterTestCase,
-            String separatorBetweenExpectations,
-            String expectationsEndString,
-            Function<String, T> testCaseProcessor,
+            boolean regenerate,
+            SnippetFileFormat fileFormat,
+            TestCaseProcessor<T> testCaseProcessor,
             ActualGenerator<T>... actualGenerators) {
         this.testCaseFile = requireNonNull(testCaseFile);
         this.regenerate = regenerate;
-        this.separatorAfterTestCase = requireNonNull(separatorAfterTestCase);
-        this.separatorBetweenExpectations = requireNonNull(separatorBetweenExpectations);
-        this.expectationsEndString = requireNonNull(expectationsEndString);
+        this.fileFormat = requireNonNull(fileFormat);
         this.testCaseProcessor = requireNonNull(testCaseProcessor);
         this.actualGenerators = actualGenerators;
-        this.descriptionStartString = requireNonNull(descriptionStartString);
-        this.descriptionEndString = requireNonNull(descriptionEndString);
     }
 
     @Override
     public void execute() throws IOException {
-        SnippetTestFile testFile = new SnippetTestFile(testCaseFile, descriptionStartString, descriptionEndString, separatorAfterTestCase, expectationsEndString);
+        SnippetTestFile testFile = new SnippetTestFile(testCaseFile, fileFormat);
         testFile.read();
-        T testCase = testCaseProcessor.apply(testFile.testCase);
+        T testCase = testCaseProcessor.processTestCase(testFile.testCase);
 
         // Put actual together:
         String actual = stream(actualGenerators)
                 .map(actualGenerator -> actualGenerator.generate(testFile.testCase, testCase))
-                .collect(joining(separatorBetweenExpectations));
+                .collect(joining(fileFormat.separatorBetweenExpectations));
 
         if (testFile.expected == null || regenerate) {
             // Write expected to test case:
