@@ -19,13 +19,13 @@ class SnippetTest<T> implements Executable {
     private final TestCaseProcessor<T> testCaseProcessor;
     private final ActualGenerator<T>[] actualGenerators;
     private final boolean regenerate;
-    private final SnippetFileFormat fileFormat;
+    private final ExpectationFileFormat fileFormat;
 
     @SafeVarargs
     protected SnippetTest(
             Path testCaseFile,
             boolean regenerate,
-            SnippetFileFormat fileFormat,
+            ExpectationFileFormat fileFormat,
             TestCaseProcessor<T> testCaseProcessor,
             ActualGenerator<T>... actualGenerators) {
         this.testCaseFile = requireNonNull(testCaseFile);

@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
  *
  * @param <T> the processed test case type, produced by your testCaseProcessor.
  */
-public class SnippetTestFactory<T> {
+public class SnippetBatchTestFactory<T> {
     private final BasePath basePath;
     private final TestCaseFilenameFilter testCaseFilenameFilter;
-    private final SnippetFileFormat fileFormat;
+    private final ExpectationFileFormat fileFormat;
     private final TestCaseProcessor<T> testCaseProcessor;
     private final ActualGenerator<T>[] actualGenerators;
 
@@ -34,8 +34,8 @@ public class SnippetTestFactory<T> {
      * @param actualGenerators       the printers that create an "actual" to test against.
      */
     @SafeVarargs
-    public SnippetTestFactory(
-            SnippetFileFormat fileFormat,
+    public SnippetBatchTestFactory(
+            ExpectationFileFormat fileFormat,
             BasePath basePath,
             TestCaseFilenameFilter testCaseFilenameFilter,
             TestCaseProcessor<T> testCaseProcessor,

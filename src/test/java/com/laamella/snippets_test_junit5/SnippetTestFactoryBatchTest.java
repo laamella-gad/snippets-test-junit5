@@ -8,13 +8,13 @@ import java.util.stream.Stream;
 
 import static com.laamella.snippets_test_junit5.TestCaseFilenameFilter.*;
 
-class SnippetTestFactoryTest {
-    private final BasePath basePath = BasePath.fromMavenModuleRoot(SnippetTestFactoryTest.class).inSrcTestResources();
+class SnippetTestFactoryBatchTest {
+    private final BasePath basePath = BasePath.fromMavenModuleRoot(SnippetTestFactoryBatchTest.class).inSrcTestResources();
 
     @TestFactory
     Stream<DynamicTest> test1() throws IOException {
-        return new SnippetTestFactory<>(
-                new SnippetFileFormat(">>>", "<<<\n", "\n^^^\n", "\n---\n", "\nvvv\n"),
+        return new SnippetBatchTestFactory<>(
+                new ExpectationFileFormat("\n^^^\n", "\n---\n", "\nvvv\n"),
                 basePath.inSubDirectory("test1"),
                 allFiles(),
                 tc -> tc,

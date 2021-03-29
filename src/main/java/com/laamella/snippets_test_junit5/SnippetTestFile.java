@@ -22,11 +22,11 @@ class SnippetTestFile {
     String testCase = null;
     String expected = null;
 
-    public SnippetTestFile(Path file,SnippetFileFormat fileFormat) {
+    public SnippetTestFile(Path file, ExpectationFileFormat fileFormat) {
         this.file = file;
         this.descriptionStartString =fileFormat.descriptionStartString;
         this.descriptionEndString = fileFormat.descriptionEndString;
-        this.separatorAfterTestCase = fileFormat.separatorAfterTestCase;
+        this.separatorAfterTestCase = fileFormat.expectationsStartString;
         this.expectationsEndString = fileFormat.expectationsEndString;
     }
 
