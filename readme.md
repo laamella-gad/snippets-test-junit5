@@ -37,6 +37,8 @@ A variation where the input of the test is written in Java code, and not in the 
 
 How to set it up
 ----------------------
+Add a dependency on the [latest version](https://search.maven.org/search?q=a:snippets-test-junit5).
+
 You have to decide on a file format. You need to pick separators that won't get in the way of the input and
 expectations. These are documented
 in [SnippetFileFormat.java](src/main/java/com/laamella/snippets_test_junit5/SnippetFileFormat.java). And example
