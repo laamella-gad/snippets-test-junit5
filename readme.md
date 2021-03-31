@@ -50,6 +50,11 @@ is [SnippetTestFactoryTest](src/test/java/com/laamella/snippets_test_junit5/Snip
 documentation is in [SnippetTestFactory](src/main/java/com/laamella/snippets_test_junit5/SnippetTestFactory.java). That
 particular setup creates two unit tests, they can be seen [here](src/test/resources/test1)
 
+If you want to regenerate the expectations for a single test, delete them from the file and run the test.
+
+If you want to regenerate the expectations for *all* files, look for the `.stream()` call on the factory, and replace it
+with `.regenerateAllExpectations()` for one run.
+
 Credits
 =======
 Based on, and contains parts of Gerald Rosenberg's [SnippetsTest](https://github.com/grosenberg/SnippetsTest).
