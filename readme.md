@@ -5,7 +5,7 @@ What is it for?
 ---------------------
 There is a common anti-pattern in (unit) testing where we write a test that makes a large print-out of the test result -
 like a `.toString`, and `assertEquals` that to a print-out we have stored on disk. These tests are *great* because we
-can any little change to the test result!
+can see any little change to the test result!
 These tests are *terrible* because every little change to the test result will break the test, even if it was totally
 irrelevant to the test case.
 
