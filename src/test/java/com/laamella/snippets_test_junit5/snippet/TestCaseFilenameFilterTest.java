@@ -1,10 +1,10 @@
-package com.laamella.snippets_test_junit5;
+package com.laamella.snippets_test_junit5.snippet;
 
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
 
-import static com.laamella.snippets_test_junit5.TestCaseFilenameFilter.*;
+import static com.laamella.snippets_test_junit5.snippet.TestCaseFilenameFilter.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestCaseFilenameFilterTest {

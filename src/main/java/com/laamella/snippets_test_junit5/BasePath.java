@@ -4,6 +4,9 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static java.lang.Character.isUpperCase;
+import static java.lang.Character.toLowerCase;
+
 /**
  * Build a path to some location in your project.
  */
@@ -36,6 +39,35 @@ public class BasePath {
 
     public BasePath inSubDirectory(String subDirectory) {
         return new BasePath(path.resolve(Paths.get(subDirectory)));
+    }
+
+    public BasePath inPackageSubDirectory(Class<?> classInPackage) {
+        return new BasePath(path.resolve(classInPackage.getPackage().getName().replace(".", "/")));
+    }
+
+    public BasePath inClassNameSubDirectory(Class<?> classWithName) {
+        return new BasePath(path.resolve(camelCaseToSnakeCase(classWithName.getSimpleName())));
+    }
+
+    public BasePath inClassPackageAndNameSubDirectory(Class<?> classWithName) {
+        return inPackageSubDirectory(classWithName).inClassNameSubDirectory(classWithName);
+    }
+
+    private String camelCaseToSnakeCase(String string) {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < string.length(); i++) {
+            char ch = string.charAt(i);
+            if (isUpperCase(ch)) {
+                if (i > 0) {
+                    result.append('_');
+                }
+                result.append(toLowerCase(ch));
+            } else {
+                result.append(ch);
+            }
+        }
+        return result.toString();
     }
 
     public Path toPath() {

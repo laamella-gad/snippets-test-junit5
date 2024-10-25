@@ -1,4 +1,4 @@
-package com.laamella.snippets_test_junit5;
+package com.laamella.snippets_test_junit5.snippet;
 
 /**
  * Takes a (preprocessed) test case, and outputs an "actual" which

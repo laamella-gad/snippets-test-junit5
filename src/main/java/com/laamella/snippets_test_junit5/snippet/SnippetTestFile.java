@@ -1,4 +1,4 @@
-package com.laamella.snippets_test_junit5;
+package com.laamella.snippets_test_junit5.snippet;
 
 import java.io.IOException;
 import java.nio.file.Files;

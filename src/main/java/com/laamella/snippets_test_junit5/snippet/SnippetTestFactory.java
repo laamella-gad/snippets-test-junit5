@@ -1,5 +1,6 @@
-package com.laamella.snippets_test_junit5;
+package com.laamella.snippets_test_junit5.snippet;
 
+import com.laamella.snippets_test_junit5.BasePath;
 import org.junit.jupiter.api.DynamicTest;
 
 import java.io.IOException;
@@ -53,17 +54,8 @@ public class SnippetTestFactory<T> {
     }
 
     public Stream<DynamicTest> stream() throws IOException {
-        return stream(false);
-    }
+        boolean regenerate = System.getProperties().containsKey("REGENERATE_EXPECTATIONS");
 
-    /**
-     * Use this once instead of "stream" to rewrite all expectations to the current actuals.
-     */
-    public Stream<DynamicTest> regenerateAllExpectations() throws IOException {
-        return stream(true);
-    }
-
-    private Stream<DynamicTest> stream(boolean regenerate) throws IOException {
         Path testCasesPath = basePath.toPath().toAbsolutePath();
 
         if (!Files.exists(testCasesPath)) {

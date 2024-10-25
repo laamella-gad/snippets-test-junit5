@@ -1,4 +1,4 @@
-package com.laamella.snippets_test_junit5;
+package com.laamella.snippets_test_junit5.snippet;
 
 /**
  * Takes the testcase string as found in the snippet, and produces the

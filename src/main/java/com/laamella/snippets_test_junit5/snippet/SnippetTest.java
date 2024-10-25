@@ -1,4 +1,4 @@
-package com.laamella.snippets_test_junit5;
+package com.laamella.snippets_test_junit5.snippet;
 
 import org.junit.jupiter.api.function.Executable;
 
@@ -50,7 +50,7 @@ class SnippetTest<T> implements Executable {
             // Write expected to test case:
             testFile.expected = actual;
             testFile.write();
-            fail("No expectation found. Generated one.");
+            fail("Generated new expection file.");
         } else {
             // Compare with expected:
             assertEquals(testFile.expected, actual);
