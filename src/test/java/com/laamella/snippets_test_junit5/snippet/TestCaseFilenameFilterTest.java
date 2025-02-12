@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
 
-import static com.laamella.snippets_test_junit5.snippet.TestCaseFilenameFilter.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.laamella.snippets_test_junit5.snippet.TestCaseFilenameFilter.allFiles;
+import static com.laamella.snippets_test_junit5.snippet.TestCaseFilenameFilter.filesWithExtension;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TestCaseFilenameFilterTest {
     @Test

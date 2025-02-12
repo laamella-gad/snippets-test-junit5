@@ -34,6 +34,7 @@ public class SnipsertExtension implements BeforeAllCallback, TestExecutionExcept
             BasePath basePath,
             String fileExtension,
             String separatorBetweenExpectations,
+            ,
             PostProcessor<T> postProcessor,
             ActualGenerator<T>... actualGenerators) {
         this.basePath = basePath;
