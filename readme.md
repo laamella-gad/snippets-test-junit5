@@ -9,7 +9,7 @@ can see any little change to the test result!
 These tests are *terrible* because every little change to the test result will break the test, even if it was totally
 irrelevant to the test case.
 
-This library offers a well-polished library for creating these kinds of tests.
+This is a well-polished library for creating these kinds of tests.
 
 It is called *snippet* test because using small test cases (snippets) will hopefully avoid the bad side of this pattern!
 

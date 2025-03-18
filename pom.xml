@@ -7,10 +7,18 @@
     <groupId>com.laamella</groupId>
     <artifactId>snippets-test-junit5</artifactId>
     <version>0.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Snippet tests for JUnit 5</description>
     <url>https://github.com/laamella-gad/snippets-test-junit5</url>
+    <modules>
+        <module>snippets-test-junit5-core</module>
+        <module>snippets-test-junit5-table</module>
+        <module>snippets-test-junit5-antlr</module>
+        <module>snippets-test-junit5-xml</module>
+        <module>snippets-test-junit5-json</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,6 +43,12 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.11.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.26.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
