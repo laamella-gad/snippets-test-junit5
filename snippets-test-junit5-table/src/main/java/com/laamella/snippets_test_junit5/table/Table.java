@@ -7,13 +7,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
 
 public class Table {
-    public static final String SEPARATOR = "\\|";
+    public static final String SEPARATOR_REGEX = "\\|";
+    public static final String SEPARATOR = "|";
 
     public List<String> header = new ArrayList<>();
     public List<Row> rows = new ArrayList<>();
@@ -24,18 +26,29 @@ public class Table {
 
     public static Table parse(String tableText) {
         String[] rows = tableText.split("\n");
-        String[] headers = rows[0].split(SEPARATOR);
+        String[] headers = rows[0].split(SEPARATOR_REGEX);
         for (int i = 0; i < headers.length; i++) {
             headers[i] = headers[i].trim();
         }
         Table table = new Table(headers);
         for (int rowNr = 1; rowNr < rows.length; rowNr++) {
             Row row = new Row();
-            String[] cells = rows[rowNr].split(SEPARATOR);
+            String[] cells = rows[rowNr].split(SEPARATOR_REGEX);
             row.cellValues.addAll(asList(cells));
             table.rows.add(row);
         }
         return table;
+    }
+
+    @Override
+    public String toString() {
+        Stream<List<String>> fullTable = Stream.concat(
+                Stream.of(header),
+                rows.stream().map(r -> r.cellValues));
+
+        // TODO calculate column widths
+
+        return fullTable.map(r -> String.join(SEPARATOR, r)).collect(Collectors.joining("\n"));
     }
 
     public <T> Stream<T> map(Supplier<T> constructor, BiConsumer<Cell, T> mapper) {
@@ -53,13 +66,13 @@ public class Table {
     public static <T> Table fromCollection(Collection<T> collection, Class<T> elementClass, String... fieldNames) {
         try {
             for (String fieldName : fieldNames) {
-                elementClass.getField(fieldName).setAccessible(true);
+                elementClass.getDeclaredField(fieldName).setAccessible(true);
             }
             Table table = new Table(fieldNames);
             for (Object o : collection) {
                 Row row = new Row();
                 for (String s : fieldNames) {
-                    Field field = elementClass.getField(s);
+                    Field field = elementClass.getDeclaredField(s);
                     Object value = field.get(o);
                     row.cellValues.add(value.toString());
                 }
