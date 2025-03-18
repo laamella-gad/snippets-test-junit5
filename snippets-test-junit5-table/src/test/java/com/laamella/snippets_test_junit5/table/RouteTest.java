@@ -7,18 +7,16 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static com.laamella.snippets_test_junit5.core.TestCaseFilenameFilter.allFiles;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
 class RouteTest {
     private final BasePath basePath = BasePath.fromMavenModuleRoot(RouteTest.class).inSrcTestResources();
+    private final RouteMappingService routeMappingService = new RouteMappingService();
 
     @TestFactory
     Stream<DynamicTest> test1() throws IOException {
@@ -30,41 +28,20 @@ class RouteTest {
         ).stream();
     }
 
-    static class Stop {
-        String place;
-        int speed;
-        String activity;
-
-        Stop() {
-        }
-
-        Stop(String place, int speed, String activity) {
-            this.place = place;
-            this.speed = speed;
-            this.activity = activity;
-        }
-    }
-
     private List<String> makeRoute(List<String> testCaseParts) {
+        // Parse test case (two input parts)
         Table officialRouteTable = Table.parse(testCaseParts.get(0));
-        Map<String, Stop> officialRoute = officialRouteTable.map(Stop::new, RouteTest::mapRowToStop)
-                .collect(toMap(s -> s.place, s -> s));
         Table ourRouteTable = Table.parse(testCaseParts.get(1));
+        List<Stop> officialRoute = officialRouteTable.map(Stop::new, RouteTest::mapRowToStop)
+                .collect(toList());
         List<Stop> ourRoute = ourRouteTable.map(Stop::new, RouteTest::mapRowToStop).collect(toList());
 
-        List<Stop> finalRoute = new ArrayList<>();
-        int speed = 0;
-        for (Stop stop : ourRoute) {
-            String activity = "";
-            Stop officialStop = officialRoute.get(stop.place);
-            if (officialStop != null) {
-                speed = officialStop.speed;
-                activity = officialStop.activity;
-            }
-            finalRoute.add(new Stop(stop.place, speed, activity));
-        }
+        // Call business logic
+        List<Stop> finalRoute = routeMappingService.mapRoute(officialRoute, ourRoute);
 
-        return singletonList(Table.fromCollection(finalRoute, Stop.class, "place", "speed", "activity").toString());
+        // Produce actual
+        Table finalRouteTable = Table.fromCollection(finalRoute, Stop.class, "place", "speed", "activity");
+        return singletonList(finalRouteTable.toString());
     }
 
     private static void mapRowToStop(Table.Cell cell, Stop stop) {
