@@ -16,10 +16,8 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 /**
  * Works together with JUnit5's @TestFactory to generate testcases
  * for all snippet files in a certain directory.
- *
- * @param <T> the processed test case type, produced by your testCaseProcessor.
  */
-public class SnippetTestFactory<T> {
+public class SnippetTestFactory {
     private final BasePath basePath;
     private final TestCaseFilenameFilter testCaseFilenameFilter;
     private final SnippetFileFormat fileFormat;

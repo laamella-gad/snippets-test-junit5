@@ -3,6 +3,8 @@ package com.laamella.antlr_grammar_snippet_test;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.List;
 
@@ -17,9 +19,8 @@ public class TokensPrinter<L extends Lexer, P extends Parser> implements Printer
     }
 
     @Override
-    public String generate(GrammarTestCase<L, P> testCase) {
-        L lexer = testCase.getLexer();
-        return testCase.getTokens().stream()
+    public String print(L lexer, P parser, List<Token> tokenList, ParseTree tree, List<String> errors) {
+        return tokenList.stream()
                 .filter(token -> printHiddenTokens || token.getChannel() == DEFAULT_CHANNEL)
                 .map(token -> ((CommonToken)token).toString(lexer).trim() + "\n")
                 .collect(joining());

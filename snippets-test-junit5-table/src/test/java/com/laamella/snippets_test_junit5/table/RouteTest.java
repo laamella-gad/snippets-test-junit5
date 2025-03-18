@@ -20,7 +20,7 @@ class RouteTest {
 
     @TestFactory
     Stream<DynamicTest> test1() throws IOException {
-        return new SnippetTestFactory<>(
+        return new SnippetTestFactory(
                 new SnippetFileFormat(">>>", "<<<\n", "\n---\n", "\n^^^\n", "\n---\n", "\nvvv\n"),
                 basePath.inSubDirectory("route_tables"),
                 allFiles(),
