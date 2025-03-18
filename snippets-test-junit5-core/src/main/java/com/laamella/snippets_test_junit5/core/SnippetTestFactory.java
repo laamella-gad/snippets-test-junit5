@@ -18,9 +18,9 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
  * for all snippet files in a certain directory.
  */
 public class SnippetTestFactory {
+    private final SnippetFileFormat fileFormat;
     private final BasePath basePath;
     private final TestCaseFilenameFilter testCaseFilenameFilter;
-    private final SnippetFileFormat fileFormat;
     private final TestCase testCase;
 
     /**

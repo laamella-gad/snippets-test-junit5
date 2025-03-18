@@ -27,7 +27,7 @@ public class ParseTreePrettyPrinter<L extends Lexer, P extends Parser> implement
         return Utils.escapeWhitespace(Trees.getNodeText(tree, parser), false);
     }
 
-    private List<Tree> getChildNodes(Tree tree, Parser parser) {
+    private List<Tree> getChildNodes(Tree tree) {
         List<Tree> childNodes = new ArrayList<>();
         for (int i = 0; i < tree.getChildCount(); i++) {
             childNodes.add(tree.getChild(i));
@@ -37,11 +37,10 @@ public class ParseTreePrettyPrinter<L extends Lexer, P extends Parser> implement
 
     @Override
     public String print(L lexer, P parser, List<Token> tokenList, ParseTree tree, List<String> errors) {
-        return print(tree, parser);
-    }
-
-    private String print(Tree t, P parser) {
-        return recursivePrinter.print(t,
-                tree1 -> getChildNodes(tree1, parser), tree -> printNode(tree, parser), true);
+        return recursivePrinter.print(
+                tree,
+                this::getChildNodes,
+                t -> printNode(t, parser),
+                true);
     }
 }

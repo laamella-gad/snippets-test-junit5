@@ -25,20 +25,19 @@ public class AntlrGrammarTestFactory<L extends Lexer, P extends Parser> extends 
     /**
      * @param lexerFactory           creates a new lexer for your grammar
      * @param parserFactory          creates a new parser for your grammar
+     * @param mainRule               the main parse rule to invoke (like FortranParser::forLoop)
      * @param basePath               sets the base path. Base path + testCasesDirectory = where the test case snippets are located. Subdirectories are included.
      * @param testCaseFilenameFilter when only snippets are in the indicated directory, "path -> true"  is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
-     * @param mainRule               the main parse rule to invoke (like FortranParser::forLoop)
-     * @param printers       the printers that create an "actual" to test against. {@link ParseTreePrettyPrinter} and {@link ErrorsPrinter} are recommended.
+     * @param printers               the printers that create an "actual" to test against. {@link ParseTreePrettyPrinter} and {@link ErrorsPrinter} are recommended.
      */
     @SafeVarargs
     public AntlrGrammarTestFactory(
             LexerFactory<L> lexerFactory,
             ParserFactory<P> parserFactory,
-            String blockCommentOpen,
+            MainRule<P> mainRule, String blockCommentOpen,
             String blockCommentClose,
             BasePath basePath,
             TestCaseFilenameFilter testCaseFilenameFilter,
-            MainRule<P> mainRule,
             Printer<L, P>... printers) {
         super(
                 new SnippetFileFormat(
@@ -50,12 +49,12 @@ public class AntlrGrammarTestFactory<L extends Lexer, P extends Parser> extends 
                         blockCommentClose),
                 basePath,
                 testCaseFilenameFilter,
-                testCaseText -> preprocess(testCaseText, mainRule, lexerFactory, parserFactory, printers)
+                testCaseText -> runTest(testCaseText, mainRule, lexerFactory, parserFactory, printers)
         );
     }
 
     @SafeVarargs
-    private static <L extends Lexer, P extends Parser> List<String> preprocess(
+    private static <L extends Lexer, P extends Parser> List<String> runTest(
             List<String> testCaseText,
             MainRule<P> mainRule,
             LexerFactory<L> lexerFactory,

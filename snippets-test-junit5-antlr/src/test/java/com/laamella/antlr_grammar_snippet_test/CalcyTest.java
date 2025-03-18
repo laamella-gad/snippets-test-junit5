@@ -23,12 +23,11 @@ public class CalcyTest {
         return new AntlrGrammarTestFactory<>(
                 CalcyLexer::new,
                 CalcyParser::new,
-                "/*", "*/",
+                mainRule, "/*", "*/",
                 BasePath.fromMavenModuleRoot(CalcyTest.class)
                         .inSrcTestResources()
                         .inSubDirectory("snippets/calcy"),
                 filesWithExtension(".calcy"),
-                mainRule,
                 new ErrorsPrinter<>(),
                 new ParseTreeLispPrinter<>(),
                 new ParseTreePrettyPrinter<>("  "),
