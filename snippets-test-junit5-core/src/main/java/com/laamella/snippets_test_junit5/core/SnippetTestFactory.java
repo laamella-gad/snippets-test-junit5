@@ -57,6 +57,10 @@ public class SnippetTestFactory {
     }
 
     private Stream<DynamicTest> stream(boolean regenerate) throws IOException {
+        // TODO make regenerate work on a system property
+
+        System.getenv().forEach((k, v) -> System.out.println(k + " " + v));
+        System.getProperties().forEach((k, v) -> System.out.println(k + " " + v));
         Path testCasesPath = basePath.toPath().toAbsolutePath();
 
         if (!Files.exists(testCasesPath)) {

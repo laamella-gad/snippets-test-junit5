@@ -8,5 +8,5 @@ import java.util.List;
  */
 @FunctionalInterface
 public interface TestCase {
-    List<String> run(List<String> testCaseParts);
+    List<String> run(List<String> testCaseParts) throws Exception;
 }

@@ -33,9 +33,13 @@ class SnippetTest implements Executable {
     public void execute() throws IOException {
         SnippetTestFile testFile = new SnippetTestFile(testCaseFile, fileFormat);
         testFile.read();
-        String actual = String.join(
-                fileFormat.separatorBetweenExpectations,
-                testCase.run(testFile.testCaseParts));
+
+        String actual;
+        try {
+            actual = String.join(fileFormat.separatorBetweenExpectations, testCase.run(testFile.testCaseParts));
+        } catch (Exception e) {
+            actual = e.getMessage();
+        }
 
         if (testFile.expected == null || regenerate) {
             // Write expected to test case:

@@ -1,4 +1,4 @@
-package com.laamella.snippets_test_junit5.core;
+package com.laamella.snippets_test_junit5.tree;
 
 import java.util.List;
 import java.util.function.Function;

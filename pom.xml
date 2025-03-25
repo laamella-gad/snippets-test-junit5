@@ -18,6 +18,8 @@
         <module>snippets-test-junit5-antlr</module>
         <module>snippets-test-junit5-xml</module>
         <module>snippets-test-junit5-json</module>
+        <module>snippets-test-junit5-tree</module>
+        <module>snippets-test-junit5-db</module>
     </modules>
 
     <properties>
@@ -150,6 +152,12 @@
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
+        </profile>
+        <profile>
+            <id>regenerate-snippets</id>
+            <properties>
+                <regenerate.snippets>true</regenerate.snippets>
+            </properties>
         </profile>
     </profiles>
 
