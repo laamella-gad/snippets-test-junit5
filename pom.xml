@@ -14,6 +14,7 @@
     <url>https://github.com/laamella-gad/snippets-test-junit5</url>
     <modules>
         <module>snippets-test-junit5-core</module>
+        <module>snippets-test-junit5-snipsert</module>
         <module>snippets-test-junit5-table</module>
         <module>snippets-test-junit5-antlr</module>
         <module>snippets-test-junit5-xml</module>

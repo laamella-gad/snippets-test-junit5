@@ -46,21 +46,6 @@ public class SnippetTestFactory {
     }
 
     public Stream<DynamicTest> stream() throws IOException {
-        return stream(false);
-    }
-
-    /**
-     * Use this once instead of "stream" to rewrite all expectations to the current actuals.
-     */
-    public Stream<DynamicTest> regenerateAllExpectations() throws IOException {
-        return stream(true);
-    }
-
-    private Stream<DynamicTest> stream(boolean regenerate) throws IOException {
-        // TODO make regenerate work on a system property
-
-        System.getenv().forEach((k, v) -> System.out.println(k + " " + v));
-        System.getProperties().forEach((k, v) -> System.out.println(k + " " + v));
         Path testCasesPath = basePath.toPath().toAbsolutePath();
 
         if (!Files.exists(testCasesPath)) {
@@ -77,8 +62,12 @@ public class SnippetTestFactory {
                         testCasesPath.resolve(filename).toAbsolutePath().toUri(),
                         new SnippetTest(
                                 testCasesPath.resolve(filename),
-                                regenerate,
+                                shouldRegenerate(),
                                 fileFormat,
                                 testCase)));
+    }
+
+    public static boolean shouldRegenerate() {
+        return System.getProperties().containsKey("REGENERATE_EXPECTATIONS");
     }
 }
