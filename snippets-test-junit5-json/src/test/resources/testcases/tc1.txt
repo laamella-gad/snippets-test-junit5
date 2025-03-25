@@ -1,0 +1,22 @@
+[
+  {
+    "intValue": 2,
+    "stringValue": "two"
+  },
+  {
+    "intValue": 1,
+    "stringValue": "one"
+  }
+]
+^^^
+[
+  {
+    "intValue": 1,
+    "stringValue": "one"
+  },
+  {
+    "intValue": 2,
+    "stringValue": "two"
+  }
+]
+vvv
