@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static com.laamella.snippets_test_junit5.core.TestCaseFilenameFilter.allFiles;
@@ -19,12 +18,7 @@ class SnippetTestFactoryTest {
                 new SnippetFileFormat(">>>", "<<<\n", "", "\n^^^\n", "\n---\n", "\nvvv\n"),
                 basePath.inSubDirectory("test1"),
                 allFiles(),
-                new TestCase() {
-                    @Override
-                    public List<String> run(List<String> testCaseParts) {
-                        return singletonList(testCaseParts.get(0).toUpperCase());
-                    }
-                }
+                testCaseParts -> singletonList(testCaseParts.get(0).toUpperCase())
         ).stream();
     }
 }

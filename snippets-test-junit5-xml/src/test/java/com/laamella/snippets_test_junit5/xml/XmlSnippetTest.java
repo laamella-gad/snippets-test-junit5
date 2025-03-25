@@ -6,16 +6,10 @@ import com.laamella.snippets_test_junit5.core.SnippetTestFactory;
 import generated.Shiporder;
 import jakarta.xml.bind.JAXBException;
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
-import org.tempuri.purchaseorderschema.Address;
 import org.tempuri.purchaseorderschema.PurchaseOrder;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -41,20 +35,4 @@ class XmlSnippetTest {
         Shiporder shiporder = service.doWork(order);
         return singletonList(XmlSnippet.print(shiporder));
     }
-
-    @Test
-    public void printTestRequest() throws JAXBException, DatatypeConfigurationException {
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
-        Address billTo = new Address();
-        billTo.setName("Hans Gustaf");
-        billTo.setStreet("Hauptstrasse");
-        billTo.setCity("Wien");
-        purchaseOrder.setBillTo(billTo);
-        purchaseOrder.getShipTos().add(billTo);
-        LocalDate localDate = LocalDate.parse("1243-01-01");
-        XMLGregorianCalendar date = DatatypeFactory.newInstance().newXMLGregorianCalendar(localDate.toString());
-        purchaseOrder.setOrderDate(date);
-        System.out.println(XmlSnippet.print(purchaseOrder));
-    }
-
 }
