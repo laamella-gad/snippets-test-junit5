@@ -13,6 +13,9 @@ import static java.nio.file.StandardOpenOption.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+/**
+ * Support asserting snippets from classic JUnit @Test methods.
+ */
 public class SnippetTestExtension implements BeforeAllCallback, TestExecutionExceptionHandler, ParameterResolver {
     private Path testCasesPath;
 
