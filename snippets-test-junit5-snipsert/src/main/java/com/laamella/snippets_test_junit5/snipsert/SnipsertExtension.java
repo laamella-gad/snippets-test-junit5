@@ -2,9 +2,7 @@ package com.laamella.snippets_test_junit5.snipsert;
 
 import com.laamella.snippets_test_junit5.core.BasePath;
 import com.laamella.snippets_test_junit5.core.SnippetTestFactory;
-import org.junit.jupiter.api.extension.BeforeAllCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
+import org.junit.jupiter.api.extension.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +15,7 @@ import static java.nio.file.StandardOpenOption.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class SnipsertExtension implements BeforeAllCallback, TestExecutionExceptionHandler {
+public class SnipsertExtension implements BeforeAllCallback, TestExecutionExceptionHandler, ParameterResolver {
     private Path testCasesPath;
 
     private final BasePath basePath;
@@ -47,22 +45,11 @@ public class SnipsertExtension implements BeforeAllCallback, TestExecutionExcept
 
     @Override
     public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
-        if (throwable.getClass() != Snipsert.AssertSnippet.class) {
+        if (throwable.getClass() != Snipsertions.AssertSnippet.class) {
             throw throwable;
         }
-        Object rawActual = ((Snipsert.AssertSnippet) throwable).actual;
-        final String actuals = String.join(separatorBetweenExpectations, actualsGenerator.generate(rawActual));
-
-        Path path = testCasesPath.resolve(context.getRequiredTestMethod().getName() + "." + fileExtension);
-        if (!Files.exists(path) || shouldRegenerate(context)) {
-            Files.write(path, actuals.getBytes(UTF_8), CREATE, WRITE, TRUNCATE_EXISTING);
-            Path relativize = basePath.toPath().relativize(path);
-
-            fail("Generated new expection file: " + relativize);
-        }
-
-        String completeFile = new String(readAllBytes(path), UTF_8);
-        assertEquals(completeFile, actuals);
+        Object rawActual = ((Snipsertions.AssertSnippet) throwable).actual;
+        assertFileOnDisk(context, rawActual);
     }
 
     public static boolean shouldRegenerate(ExtensionContext context) {
@@ -70,4 +57,34 @@ public class SnipsertExtension implements BeforeAllCallback, TestExecutionExcept
                 context.getRequiredTestClass().isAnnotationPresent(RegenerateExpectations.class) ||
                 SnippetTestFactory.shouldRegenerate();
     }
+
+    @Override
+    public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+        return parameterContext.getParameter().getType().equals(Snip.class);
+    }
+
+    @Override
+    public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+        return new Snip(actual -> assertFileOnDisk(extensionContext, actual));
+    }
+
+    void assertFileOnDisk(ExtensionContext context, Object rawActual) {
+        try {
+            final String actuals = String.join(separatorBetweenExpectations, actualsGenerator.generate(rawActual));
+
+            Path path = testCasesPath.resolve(context.getRequiredTestMethod().getName() + "." + fileExtension);
+            if (!Files.exists(path) || shouldRegenerate(context)) {
+                Files.write(path, actuals.getBytes(UTF_8), CREATE, WRITE, TRUNCATE_EXISTING);
+                Path relativize = basePath.toPath().relativize(path);
+
+                fail("Generated new expectation file: " + relativize);
+            }
+
+            String completeFile = new String(readAllBytes(path), UTF_8);
+            assertEquals(completeFile, actuals);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
