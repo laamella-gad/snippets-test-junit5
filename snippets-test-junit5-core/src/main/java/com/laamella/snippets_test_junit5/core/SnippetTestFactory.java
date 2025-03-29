@@ -67,7 +67,7 @@ public class SnippetTestFactory {
                                 testCase)));
     }
 
-    public static boolean shouldRegenerate() {
+    static boolean shouldRegenerate() {
         return System.getProperties().containsKey("REGENERATE_EXPECTATIONS");
     }
 }
