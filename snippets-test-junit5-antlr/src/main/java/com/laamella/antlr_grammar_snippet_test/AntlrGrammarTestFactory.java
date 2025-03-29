@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.laamella.snippets_test_junit5.core.TestCase.multiOutputTestCase;
 import static org.antlr.v4.runtime.atn.PredictionMode.LL_EXACT_AMBIG_DETECTION;
 
 /**
@@ -49,19 +50,19 @@ public class AntlrGrammarTestFactory<L extends Lexer, P extends Parser> extends 
                         blockCommentClose),
                 basePath,
                 testCaseFilenameFilter,
-                testCaseText -> runTest(testCaseText, mainRule, lexerFactory, parserFactory, printers)
+                multiOutputTestCase(testCaseText -> runTest(testCaseText, mainRule, lexerFactory, parserFactory, printers))
         );
     }
 
     @SafeVarargs
     private static <L extends Lexer, P extends Parser> List<String> runTest(
-            List<String> testCaseText,
+            String testCaseText,
             MainRule<P> mainRule,
             LexerFactory<L> lexerFactory,
             ParserFactory<P> parserFactory,
             Printer<L, P>... printers) {
         List<String> errors = new ArrayList<>();
-        L lexer = lexerFactory.create(CharStreams.fromString(testCaseText.get(0)));
+        L lexer = lexerFactory.create(CharStreams.fromString(testCaseText));
         collectErrorAndWarningMessagesInList(lexer, errors);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         tokens.fill();

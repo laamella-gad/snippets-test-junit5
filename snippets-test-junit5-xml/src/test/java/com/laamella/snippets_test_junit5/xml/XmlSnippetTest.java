@@ -10,11 +10,10 @@ import org.junit.jupiter.api.TestFactory;
 import org.tempuri.purchaseorderschema.PurchaseOrder;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Stream;
 
+import static com.laamella.snippets_test_junit5.core.TestCase.simpleTestCase;
 import static com.laamella.snippets_test_junit5.core.TestCaseFilenameFilter.allFiles;
-import static java.util.Collections.singletonList;
 
 class XmlSnippetTest {
     private final BasePath basePath = BasePath.fromMavenModuleRoot(XmlSnippetTest.class).inSrcTestResources();
@@ -26,13 +25,13 @@ class XmlSnippetTest {
                 new SnippetFileFormat(">>>", "<<<\n", "\n---\n", "\n^^^\n", "\n---\n", "\nvvv\n"),
                 basePath.inSubDirectory("purchase"),
                 allFiles(),
-                this::runTestCase
+                simpleTestCase(this::runTestCase)
         ).stream();
     }
 
-    private List<String> runTestCase(List<String> inputs) throws JAXBException {
-        PurchaseOrder order = XmlSnippet.parse(PurchaseOrder.class, inputs.get(0));
+    private String runTestCase(String inputs) throws JAXBException {
+        PurchaseOrder order = XmlSnippet.parse(PurchaseOrder.class, inputs);
         Shiporder shiporder = service.doWork(order);
-        return singletonList(XmlSnippet.print(shiporder));
+        return XmlSnippet.print(shiporder);
     }
 }

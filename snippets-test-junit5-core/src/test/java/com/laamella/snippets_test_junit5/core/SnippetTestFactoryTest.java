@@ -6,8 +6,8 @@ import org.junit.jupiter.api.TestFactory;
 import java.io.IOException;
 import java.util.stream.Stream;
 
+import static com.laamella.snippets_test_junit5.core.TestCase.simpleTestCase;
 import static com.laamella.snippets_test_junit5.core.TestCaseFilenameFilter.allFiles;
-import static java.util.Collections.singletonList;
 
 class SnippetTestFactoryTest {
     private final BasePath basePath = BasePath.fromMavenModuleRoot(SnippetTestFactoryTest.class).inSrcTestResources();
@@ -18,7 +18,7 @@ class SnippetTestFactoryTest {
                 new SnippetFileFormat(">>>", "<<<\n", "", "\n^^^\n", "\n---\n", "\nvvv\n"),
                 basePath.inSubDirectory("test1"),
                 allFiles(),
-                testCaseParts -> singletonList(testCaseParts.get(0).toUpperCase())
+                simpleTestCase(String::toUpperCase)
         ).stream();
     }
 }

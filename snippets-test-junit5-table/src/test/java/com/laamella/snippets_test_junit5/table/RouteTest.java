@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static com.laamella.snippets_test_junit5.core.TestCase.multiInputTestCase;
 import static com.laamella.snippets_test_junit5.core.TestCaseFilenameFilter.allFiles;
-import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
 class RouteTest {
@@ -24,11 +24,11 @@ class RouteTest {
                 new SnippetFileFormat(">>>", "<<<\n", "\n---\n", "\n^^^\n", "\n---\n", "\nvvv\n"),
                 basePath.inSubDirectory("route_tables"),
                 allFiles(),
-                this::makeRoute
+                multiInputTestCase(this::makeRoute)
         ).stream();
     }
 
-    private List<String> makeRoute(List<String> testCaseParts) {
+    private String makeRoute(List<String> testCaseParts) {
         // Parse test case (two input parts)
         Table officialRouteTable = Table.parse(testCaseParts.get(0));
         Table ourRouteTable = Table.parse(testCaseParts.get(1));
@@ -41,7 +41,7 @@ class RouteTest {
 
         // Produce actual
         Table finalRouteTable = Table.fromCollection(finalRoute, Stop.class, "place", "speed", "activity");
-        return singletonList(finalRouteTable.toString());
+        return finalRouteTable.toString();
     }
 
     private static void mapRowToStop(Table.Cell cell, Stop stop) {
