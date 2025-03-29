@@ -24,6 +24,10 @@ public class Table {
         this.header.addAll(asList(header));
     }
 
+    public Table(List<String> header) {
+        this.header = requireNonNull(header);
+    }
+
     public static Table parse(String tableText) {
         String[] rows = tableText.split("\n");
         String[] headers = rows[0].split(SEPARATOR_REGEX);
@@ -85,7 +89,15 @@ public class Table {
     }
 
     public static class Row {
-        public final List<String> cellValues = new ArrayList<>();
+        public final List<String> cellValues;
+
+        public Row() {
+            cellValues = new ArrayList<>();
+        }
+
+        public Row(List<String> cellValues) {
+            this.cellValues = cellValues;
+        }
     }
 
     public static class Cell {

@@ -54,10 +54,6 @@
                     <xjbSources>
                         <xjbSource>src/test/resources/bindings.xjb</xjbSource>
                     </xjbSources>
-                    <bindingDirectory>${basedir}/src/test/resources/f</bindingDirectory>
-                    <bindingIncludes>
-                        <include>*.xjb</include>
-                    </bindingIncludes>
                     <sources>
                         <source>src/test/resources/purchaseorder.xsd</source>
                         <source>src/test/resources/shipping.xsd</source>

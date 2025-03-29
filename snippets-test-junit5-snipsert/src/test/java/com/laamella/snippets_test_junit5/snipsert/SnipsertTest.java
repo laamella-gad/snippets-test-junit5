@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static com.laamella.snippets_test_junit5.snipsert.Snipsert.snipsert;
 
@@ -20,12 +19,9 @@ class SnipsertTest {
                 basePath.inClassPackageAndNameSubDirectory(testClass),
                 "txt",
                 "\n---\n",
-                new ActualsGenerator() {
-                    @Override
-                    public List<String> generate(Object actual) {
-                        String testString = (String) actual;
-                        return Arrays.asList(testString, testString.toUpperCase(), testString.toLowerCase());
-                    }
+                actual -> {
+                    String testString = (String) actual;
+                    return Arrays.asList(testString, testString.toUpperCase(), testString.toLowerCase());
                 });
     }
 
