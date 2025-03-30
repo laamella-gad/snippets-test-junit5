@@ -1,3 +1,6 @@
+Snippets tests for Antlr
+=====================
 
+For quickly creating tests for your grammar.
 
-Based on, and contains parts of Gerald Rosenberg's [SnippetsTest](https://github.com/grosenberg/SnippetsTest).
+Check [the test directory](src/test/) to see how everything fits together.
