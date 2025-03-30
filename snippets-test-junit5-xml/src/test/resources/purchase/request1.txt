@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PurchaseOrder OrderDate="2029-01-01" xmlns="http://tempuri.org/PurchaseOrderSchema.xsd">
+    <ShipTo>
+        <name>Hans Gustaf</name>
+        <street>Hauptstrasse</street>
+        <city>Wien</city>
+    </ShipTo>
+    <BillTo>
+        <name>Erich Gustaf</name>
+        <street>Hauptstrasse</street>
+        <city>Wien</city>
+    </BillTo>
+</PurchaseOrder>
+^^^
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<shiporder>
+    <shipto>
+        <name>Hans Gustaf</name>
+        <address>Hauptstrasse</address>
+        <city>Wien</city>
+    </shipto>
+    <item>
+        <title>Ball</title>
+        <price>10</price>
+    </item>
+</shiporder>
+vvv

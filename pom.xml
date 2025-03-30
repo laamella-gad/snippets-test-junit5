@@ -7,10 +7,20 @@
     <groupId>com.laamella</groupId>
     <artifactId>snippets-test-junit5</artifactId>
     <version>0.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Snippet tests for JUnit 5</description>
     <url>https://github.com/laamella-gad/snippets-test-junit5</url>
+    <modules>
+        <module>snippets-test-junit5-core</module>
+        <module>snippets-test-junit5-table</module>
+        <module>snippets-test-junit5-antlr</module>
+        <module>snippets-test-junit5-xml</module>
+        <module>snippets-test-junit5-json</module>
+        <module>snippets-test-junit5-tree</module>
+        <module>snippets-test-junit5-db</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,7 +44,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.11.4</version>
+            <version>5.11.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.26.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -51,11 +67,11 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.2</version>
+                <version>3.3.1</version>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.5.2</version>
+                <version>3.3.1</version>
             </plugin>
         </plugins>
     </build>
@@ -85,7 +101,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.11.2</version>
+                        <version>3.10.1</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -136,6 +152,12 @@
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
+        </profile>
+        <profile>
+            <id>regenerate-snippets</id>
+            <properties>
+                <regenerate.snippets>true</regenerate.snippets>
+            </properties>
         </profile>
     </profiles>
 

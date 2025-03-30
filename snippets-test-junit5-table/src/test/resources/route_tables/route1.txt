@@ -1,0 +1,24 @@
+place       |speed  |activity
+Baillmar    |20     |nothing
+Kilbalock   |50     |picnic
+Rueburn     |60     |campfire
+Manhoman    |90     |hiking
+Willehavn   |75     |swimming
+---
+place
+Baillmar
+Kilbalock
+Honbach
+Manhoman
+Vatsen
+Willehavn
+
+^^^
+place|speed|activity
+Baillmar|20|nothing
+Kilbalock|50|picnic
+Honbach|50|
+Manhoman|90|hiking
+Vatsen|90|
+Willehavn|75|swimming
+vvv
