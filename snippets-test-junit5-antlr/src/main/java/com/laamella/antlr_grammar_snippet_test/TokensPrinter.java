@@ -22,7 +22,7 @@ public class TokensPrinter<L extends Lexer, P extends Parser> implements Printer
     public String print(L lexer, P parser, List<Token> tokenList, ParseTree tree, List<String> errors) {
         return tokenList.stream()
                 .filter(token -> printHiddenTokens || token.getChannel() == DEFAULT_CHANNEL)
-                .map(token -> ((CommonToken) token).toString(lexer).trim() + "\n")
+                .map(token -> ((CommonToken)token).toString(lexer).trim() + "\n")
                 .collect(joining());
     }
 }
