@@ -8,7 +8,7 @@ import jakarta.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.io.StringWriter;
 
-public class XmlSnippet {
+public class JaxbXmlSnippet {
     @SuppressWarnings("unchecked")
     public static <T> T parse(Class<T> rootClass, String xml) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(rootClass);

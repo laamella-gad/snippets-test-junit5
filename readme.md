@@ -47,8 +47,8 @@ Add a dependency on the [latest version](https://search.maven.org/search?q=a:sni
 You have to decide on a file format. You need to pick separators that won't get in the way of the input and
 expectations. These are documented
 in [SnippetFileFormat.java](snippets-test-junit5-core/src/main/java/com/laamella/snippets_test_junit5/core/SnippetFileFormat.java).
-And example
-is [SnippetTestFactoryTest.java](https://github.com/laamella-gad/snippets-test-junit5/blob/master/src/test/java/com/laamella/snippets_test_junit5/SnippetTestFactoryTest.java)
+An example
+is [SnippetTestFactoryTest.java](https://github.com/laamella-gad/snippets-test-junit5/blob/master/snippets-test-junit5-core/src/test/java/com/laamella/snippets_test_junit5/core/SnippetTestFactoryTest.java)
 
 Next you can create a unit test. JUnit5's `@TestFactory` approach is used to dynamically generate unit tests for your
 test files. An example
@@ -61,9 +61,14 @@ particular setup creates two unit tests, they can be seen [here](snippets-test-j
 
 If you want to regenerate the expectations for a single test, delete the expectations from the file and run the test.
 
-(TODO outdated, using environment variable now) If you want to regenerate the expectations for *all* files, look for the
-`.stream()` call on the factory, and replace it
-with `.regenerateAllExpectations()` for one run.
+If you want to regenerate the expectations for *all* files, run your tests with the system property
+`REGENERATE_EXPECTATIONS` set (the value doesn't matter):
+
+```
+mvn test -DREGENERATE_EXPECTATIONS
+```
+
+The tests will still fail on that run, so you can review what changed before committing.
 
 Credits
 =======
