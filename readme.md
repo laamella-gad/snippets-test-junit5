@@ -43,7 +43,7 @@ little life cycle:
 
 ## How to set it up
 
-Add a dependency on the [latest version](https://central.sonatype.com/artifact/com.laamella/snippets-test-junit5).
+Add a dependency on the [latest version](https://central.sonatype.com/artifact/com.laamella/snippets-test-junit5-core).
 
 You have to decide on a file format. You need to pick separators that won't get in the way of the input and
 expectations. These are documented
@@ -70,6 +70,17 @@ mvn test -DREGENERATE_EXPECTATIONS
 The tests will still fail on that run, so you can review what changed before committing.
 
 ## Support for specific cases
+
+Several optional submodules provide ready-made parsers and printers for common formats:
+
+- **snippets-test-junit5-json** — parse and pretty-print JSON using Gson, for use as test input/output.
+- **snippets-test-junit5-xml** — parse and pretty-print XML via JAXB, for use as test input/output.
+- **snippets-test-junit5-table** — renders tabular data (e.g. collections of objects) as a `|`-separated text table.
+- **snippets-test-junit5-db** — executes a SQL query via JDBC and formats the result set as a table, for use as test
+  output.
+- **snippets-test-junit5-tree** — prints hierarchical/tree-shaped data as indented text, for use as test output.
+- **snippets-test-junit5-antlr** — parse input with an ANTLR grammar and output the token list and parse tree as
+  expectations. See the [antlr readme](snippets-test-junit5-antlr/readme.md).
 
 ## Credits
 Based on, and contains parts of Gerald Rosenberg's [SnippetsTest](https://github.com/grosenberg/SnippetsTest).
