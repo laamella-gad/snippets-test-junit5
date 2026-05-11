@@ -1,5 +1,6 @@
 package com.laamella.snippets_test_junit5.core;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.extension.*;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * Support asserting snippets from classic JUnit @Test methods.
  */
 public class SnippetTestExtension implements BeforeAllCallback, TestExecutionExceptionHandler, ParameterResolver {
-    private Path testCasesPath;
+    private @Nullable Path testCasesPath;
 
     private final BasePath basePath;
     private final String fileExtension;

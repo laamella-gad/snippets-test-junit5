@@ -1,5 +1,7 @@
 package com.laamella.snippets_test_junit5.core;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,9 +23,9 @@ class SnippetTestFile {
     private final String separatorBetweenTestCases;
     private final String descriptionStartString;
     private final String descriptionEndString;
-    String description = null;
-    List<String> testCaseParts = null;
-    String expected = null;
+    @Nullable String description = null;
+    @Nullable List<String> testCaseParts = null;
+    @Nullable String expected = null;
 
     public SnippetTestFile(Path file, SnippetFileFormat fileFormat) {
         this.file = file;

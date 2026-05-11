@@ -6,6 +6,7 @@ import com.laamella.snippets_test_junit5.core.SnippetTestFactory;
 import com.laamella.snippets_test_junit5.core.TestCaseFilenameFilter;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +82,7 @@ public class AntlrGrammarTestFactory<L extends Lexer, P extends Parser> extends 
         recognizer.addErrorListener(new DiagnosticErrorListener(true));
         recognizer.addErrorListener(new BaseErrorListener() {
             @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+            public void syntaxError(Recognizer<?, ?> recognizer, @Nullable Object offendingSymbol, int line, int charPositionInLine, String msg, @Nullable RecognitionException e) {
                 errors.add("line: " + line + ", " +
                         "offset: " + charPositionInLine + ", " +
                         (offendingSymbol != null ? "symbol:" + offendingSymbol + " " : "") +
