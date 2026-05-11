@@ -26,7 +26,7 @@ public interface TestCase {
     }
 
     /**
-     * Convenience method that create a test case that has one input and several outputs.
+     * Convenience method that create a test case that has multiple inputs and one output.
      */
     static TestCase multiInputTestCase(ThrowingFunction<List<String>, String> testCase) {
         return testCaseParts -> singletonList(testCase.apply(testCaseParts));

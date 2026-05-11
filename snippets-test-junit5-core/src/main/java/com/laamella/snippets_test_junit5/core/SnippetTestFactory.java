@@ -24,15 +24,14 @@ public class SnippetTestFactory {
     private final TestCase testCase;
 
     /**
-     * The factory will generate test cases for all files matching testCaseFilenameFilter in directory basePath and its subdirectories.
+     * The factory will generate test cases for all files matching testCaseFilenameFilter in basePath and its subdirectories.
      * The files will be read and interpreted according to the fileFormat.
-     * The input in the files will be passed through the testCaseProcessor so that the plain text can be turned into the model you want to work with.
-     * That model is passed to each of the actualGenerators, which create the "actuals" that will be compared with the "expectations" in the file.
+     * The testCase receives the input parts from each file, runs the test, and produces the "actuals" that are compared with the "expectations" in the file.
      *
      * @param fileFormat             the special strings used in the snippets.
-     * @param basePath               sets the base path. Base path + testCasesDirectory = where the test case snippets are located. Subdirectories are included. {@link BasePath} will help in setting up this path.
-     * @param testCaseFilenameFilter when only snippets are in the indicated directory, "path -> true"  is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
-     * @param testCase      takes the test case text that was found in a snippet file, runs your test, and outputs the "actuals".
+     * @param basePath               the directory where the test case snippets are located. Subdirectories are included. {@link BasePath} will help in setting up this path.
+     * @param testCaseFilenameFilter when only snippets are in the indicated directory, "path -> true" is enough. Otherwise use something like "path -> path.toString().endsWith(\".java\")"
+     * @param testCase               takes the test case parts found in a snippet file, runs your test, and outputs the "actuals".
      */
     public SnippetTestFactory(
             SnippetFileFormat fileFormat,
