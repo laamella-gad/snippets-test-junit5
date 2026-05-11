@@ -1,5 +1,6 @@
 package com.laamella.snippets_test_junit5.core;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ class SnippetTest implements Executable {
         SnippetTestFile testFile = new SnippetTestFile(testCaseFile, fileFormat);
         testFile.read();
 
-        String actual;
+        @Nullable String actual;
         try {
             actual = String.join(fileFormat.separatorBetweenExpectations, testCase.run(testFile.testCaseParts));
         } catch (Exception e) {

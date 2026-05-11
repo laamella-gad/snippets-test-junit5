@@ -1,10 +1,12 @@
 package com.laamella.snippets_test_junit5.core;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 class Split {
-    static List<String> split(String str, String pattern) {
+    static List<String> split(String str, @Nullable String pattern) {
         List<String> result = new ArrayList<>();
         if (pattern == null || pattern.isEmpty()) {
             result.add(str);

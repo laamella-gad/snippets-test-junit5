@@ -15,8 +15,8 @@ import java.util.stream.Stream;
 import static com.laamella.snippets_test_junit5.core.TestCase.simpleTestCase;
 import static com.laamella.snippets_test_junit5.core.TestCaseFilenameFilter.allFiles;
 
-class XmlSnippetTest {
-    private final BasePath basePath = BasePath.fromMavenModuleRoot(XmlSnippetTest.class).inSrcTestResources();
+class JaxbXmlSnippetTest {
+    private final BasePath basePath = BasePath.fromMavenModuleRoot(JaxbXmlSnippetTest.class).inSrcTestResources();
     private final Service service = new Service();
 
     @TestFactory
@@ -30,8 +30,8 @@ class XmlSnippetTest {
     }
 
     private String runTestCase(String inputs) throws JAXBException {
-        PurchaseOrder order = XmlSnippet.parse(PurchaseOrder.class, inputs);
+        PurchaseOrder order = JaxbXmlSnippet.parse(PurchaseOrder.class, inputs);
         Shiporder shiporder = service.doWork(order);
-        return XmlSnippet.print(shiporder);
+        return JaxbXmlSnippet.print(shiporder);
     }
 }

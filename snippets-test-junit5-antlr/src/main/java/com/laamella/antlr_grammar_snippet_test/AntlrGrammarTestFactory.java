@@ -6,6 +6,7 @@ import com.laamella.snippets_test_junit5.core.SnippetTestFactory;
 import com.laamella.snippets_test_junit5.core.TestCaseFilenameFilter;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,9 +27,11 @@ public class AntlrGrammarTestFactory<L extends Lexer, P extends Parser> extends 
     /**
      * @param lexerFactory           creates a new lexer for your grammar
      * @param parserFactory          creates a new parser for your grammar
-     * @param mainRule               the main parse rule to invoke (like FortranParser::forLoop)
-     * @param basePath               sets the base path. Base path + testCasesDirectory = where the test case snippets are located. Subdirectories are included.
-     * @param testCaseFilenameFilter when only snippets are in the indicated directory, "path -> true"  is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
+     * @param mainRule               the main parse rule to invoke (like {@code FortranParser::forLoop})
+     * @param blockCommentOpen       the opening string for block comments in your grammar (e.g. "/*")
+     * @param blockCommentClose      the closing string for block comments in your grammar (e.g. "*\/")
+     * @param basePath               the directory where the test case snippets are located. Subdirectories are included.
+     * @param testCaseFilenameFilter when only snippets are in the indicated directory, "path -> true" is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
      * @param printers               the printers that create an "actual" to test against. {@link ParseTreePrettyPrinter} and {@link ErrorsPrinter} are recommended.
      */
     @SafeVarargs
@@ -79,7 +82,7 @@ public class AntlrGrammarTestFactory<L extends Lexer, P extends Parser> extends 
         recognizer.addErrorListener(new DiagnosticErrorListener(true));
         recognizer.addErrorListener(new BaseErrorListener() {
             @Override
-            public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
+            public void syntaxError(Recognizer<?, ?> recognizer, @Nullable Object offendingSymbol, int line, int charPositionInLine, String msg, @Nullable RecognitionException e) {
                 errors.add("line: " + line + ", " +
                         "offset: " + charPositionInLine + ", " +
                         (offendingSymbol != null ? "symbol:" + offendingSymbol + " " : "") +
