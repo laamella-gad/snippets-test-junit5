@@ -26,9 +26,11 @@ public class AntlrGrammarTestFactory<L extends Lexer, P extends Parser> extends 
     /**
      * @param lexerFactory           creates a new lexer for your grammar
      * @param parserFactory          creates a new parser for your grammar
-     * @param mainRule               the main parse rule to invoke (like FortranParser::forLoop)
-     * @param basePath               sets the base path. Base path + testCasesDirectory = where the test case snippets are located. Subdirectories are included.
-     * @param testCaseFilenameFilter when only snippets are in the indicated directory, "path -> true"  is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
+     * @param mainRule               the main parse rule to invoke (like {@code FortranParser::forLoop})
+     * @param blockCommentOpen       the opening string for block comments in your grammar (e.g. "/*")
+     * @param blockCommentClose      the closing string for block comments in your grammar (e.g. "*\/")
+     * @param basePath               the directory where the test case snippets are located. Subdirectories are included.
+     * @param testCaseFilenameFilter when only snippets are in the indicated directory, "path -> true" is enough. Otherwise use something like "path -> path.toString().endsWith(".java")"
      * @param printers               the printers that create an "actual" to test against. {@link ParseTreePrettyPrinter} and {@link ErrorsPrinter} are recommended.
      */
     @SafeVarargs
